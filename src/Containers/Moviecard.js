@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import Paginationcomp from '../Components/Paginationcomp';
 import Loading from '../Components/Loading';
+import {motion} from 'framer-motion'
 import {unavailable} from '../Config/Config'
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -89,6 +90,30 @@ modal: {
 
 }));
 function Moviecard(props) {
+
+
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.1
+      }
+    }
+  }
+    
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  }
+
+
+
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 const[modalData,setModalData]= useState(null);
@@ -111,14 +136,20 @@ let datad= props.data.results
     return (
      <>
      {console.log(props)}
-        <div className={classes.trendinglist}>
+        <motion.div className={classes.trendinglist}
+        variants={container}
+        initial="hidden"
+        animate="visible"
+        >
         <Grid container spacing={3} style={{marginBottom:"20px"}}>
           
         {(datad && datad.length>=1)?
         datad.map((a,index)=>
       <Grid item key={a.id} md={3} sm={6}  xs={12} className={classes.indivisualgrid}>
-         
-         <div className={classes.posts}>
+         <motion.div className={classes.posts}
+         variants={item}
+
+         >
              <div className={classes.rating}>
     {a.vote_average}
              </div>
@@ -148,7 +179,7 @@ let datad= props.data.results
          </div>
          
          </div>
-         </div>
+         </motion.div>
         </Grid>
     ): (props.field==="myListview"?<div className={classes.notfound}>"ADD SOME MOVIES YOU WISH TO WATCH LATER"</div> :
     
@@ -157,7 +188,7 @@ let datad= props.data.results
         {!props.field && (props.data.results.length>=1)?
         <Paginationcomp style={{padding:"0",width:"100px"}} setpageNumber={props.setpageNumber} no_ofpages={props.no_ofpages}/>
         :null}
-        </div>
+        </motion.div>
 
         <Modal
         aria-labelledby="transition-modal-title"
@@ -177,11 +208,6 @@ let datad= props.data.results
           
         </Fade>
       </Modal>
-
-
-
-
-
   </>
     )
 }
