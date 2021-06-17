@@ -25,7 +25,7 @@ function Header() {
         <Link to="/" className={classes.links}>
         <>
         
-        <Typography color="secondary" variant="h3" style={{fontFamily:"Kaushan Script"}}>
+        <Typography color="secondary" variant="h3" style={{fontFamily:"Orbitron"}}>
          XION 
          </Typography >
         </>
